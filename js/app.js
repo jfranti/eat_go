@@ -49,6 +49,11 @@ $(document).ready(function() {
       }
   });
 
+  $('.ticket-number-form').submit(function(event) {
+    event.preventDefault();
+    
+  })
+
 
 
 
