@@ -25,6 +25,27 @@ var addToMyItems = function(id){
   myItems.push(find(id));
 }
 
+var checkForRemove = function(id) {
+  for (var i = 0; i < myItems.length; i++) {
+    console.log("comparing" + myItems[i].id + " and " + id);
+    if (id == myItems[i].id) {
+      console.log("true");
+      return true;
+    }
+  }
+  console.log("false");
+  return false;
+}
+
+var remove = function(id) {
+  for (var i = 0; i < myItems.length; i++) {
+    if (myItems[i].id == id) {
+      myItems.splice(i, 1);
+      console.log(myItems.count);
+    }
+  }
+}
+
 function getTotal() {
   totalCost = 0;
   for (var i = 0; i < myItems.length; i++) {
@@ -48,34 +69,14 @@ $(document).ready(function() {
   $(".mealItem").click(function() {
     var currentId = $(this).val();
     $(this).toggleClass("btn-danger");
-
-    for (var i = 0; i <= myItems.length; i++) {
-      if (currentId === myItems[i].id){
-        console.log("i found a match");
-        myItems.splice(i, 1);
-      } else {
-        addToMyItems(currentId);
-      }
-
-
-
-
-      // console.log("we're in the for loop");
-      // if (myItems.length == 0) {
-      //   console.log(myItems.length);
-      //   addToMyItems(currentId);
-      //   break;
-      // } else if (myItems[i].id === parseInt(currentId)) {
-      //   // console.log("you already are paying for this meal");
-      //   myItems.splice(i, 1);
-      //   break;
-      // } else {
-      //   addToMyItems(currentId);
-      //   break;
-      // }
+    if (checkForRemove(currentId) === false) {
+      console.log("you've added a new meal.");
+      addToMyItems(currentId);
+    } else {
+      console.log("you've removed an existing meal.");
+      remove(currentId);
     }
-
-  $("#total").text(parseInt(getTotal()));
+    $("#total").text(parseInt(getTotal()));
 });
 
 
